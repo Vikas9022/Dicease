@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitors - DiseasePredict Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="how-it-works.html">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="predict.html">Predict</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold btn btn-warning text-dark ms-2" href="visitors.html"><i class="bi bi-people"></i> Visitors</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-outline-primary ms-2" href="login.html"><i class="bi bi-person"></i> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Login Modal -->
+    <div class="modal fade" id="adminLoginModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-shield-lock me-2"></i>Admin Login Required
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="adminLoginForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Admin ID</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <input type="text" class="form-control" id="adminId" placeholder="Admin123" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" id="adminPw" placeholder="******" required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePw" title="Show password">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <div class="form-text small mt-1">
+                                ID: <code>Admin123</code> | PW: <code>administrator@0202</code>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login as Admin
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visitors Dashboard (Hidden by default) -->
+    <div id="visitorsDashboard" class="container-fluid py-5" style="display: none;">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h1 class="display-4 fw-bold text-primary mb-3">
+                    <i class="bi bi-people-fill me-3"></i>Visitors & Patient Records
+                </h1>
+                <p class="lead text-muted">Admin dashboard - All prediction data from registered users</p>
+                <div class="alert alert-info">
+                    <i class="bi bi-database-fill me-2"></i>Total Records: <span id="totalRecords">0</span> | 
+                    Today: <span id="todayRecords">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search by name, email, disease...">
+                    <button class="btn btn-outline-secondary" id="clearSearch" title="Clear">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <select class="form-select" id="filterStatus">
+                    <option>All Status</option>
+                    <option>High Risk</option>
+                    <option>Medium Risk</option>
+                    <option>Low Risk</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Patients Table -->
+        <div class="card shadow-lg">
+            <div class="card-header bg-light">
+                <h5 class="mb-0"><i class="bi bi-table me-2"></i>Patient Prediction History</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="patientsTable">
+                        <thead class="table-dark sticky-top">
+                            <tr>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Email/Phone</th>
+                                <th>Symptoms</th>
+                                <th>Top Prediction</th>
+                                <th>Confidence</th>
+                                <th>Risk</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientsTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center py-5">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="mt-3 text-muted">Loading patient records...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <button class="btn btn-outline-primary" id="exportCSV">
+                    <i class="bi bi-file-earmark-spreadsheet me-2"></i>Export CSV
+                </button>
+                <button class="btn btn-outline-success ms-2" id="exportJSON">
+                    <i class="bi bi-filetype-json me-2"></i>Export JSON
+                </button>
+            </div>
+            <div class="col-md-6 text-end">
+                <button class="btn btn-warning" id="logoutAdmin">
+                    <i class="bi bi-box-arrow-right me-2"></i>Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Data Message -->
+    <div id="noDataMsg" class="container py-5 text-center" style="display: none;">
+        <i class="bi bi-inbox display-1 text-muted mb-4"></i>
+        <h3 class="text-muted mb-3">No Patient Records</h3>
+        <p class="lead text-muted">No predictions found. Patients need to login and use prediction first.</p>
+        <a href="index.html" class="btn btn-primary btn-lg">← Back to Home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import Database from './js/database.js';
+        
+        window.Database = Database;
+    </script>
+    <script>
+        let isAdminLoggedIn = false;
+        const ADMIN_CREDENTIALS = {
+            id: 'Admin123',
+            password: 'administrator@0202'
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminLoginModal = new bootstrap.Modal(document.getElementById('adminLoginModal'));
+            const dashboard = document.getElementById('visitorsDashboard');
+            const noDataMsg = document.getElementById('noDataMsg');
+            
+            // Auto show login modal
+            adminLoginModal.show();
+            
+            // Admin login form
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const adminId = document.getElementById('adminId').value;
+                const adminPw = document.getElementById('adminPw').value;
+                
+                if (adminId === ADMIN_CREDENTIALS.id && adminPw === ADMIN_CREDENTIALS.password) {
+                    isAdminLoggedIn = true;
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    adminLoginModal.hide();
+                    dashboard.style.display = 'block';
+                    loadPatientRecords();
+                } else {
+                    alert('❌ Invalid credentials!\nID: Admin123\nPW: administrator@0202');
+                    document.getElementById('adminPw').value = '';
+                }
+            });
+            
+            // Password toggle
+            document.getElementById('togglePw').addEventListener('click', function() {
+                const pwField = document.getElementById('adminPw');
+                const icon = this.querySelector('i');
+                if (pwField.type === 'password') {
+                    pwField.type = 'text';
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                } else {
+                    pwField.type = 'password';
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                }
+            });
+
+            // Check if already logged in
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                isAdminLoggedIn = true;
+                adminLoginModal.hide();
+                dashboard.style.display = 'block';
+                loadPatientRecords();
+            }
+
+            // Logout
+            document.getElementById('logoutAdmin').addEventListener('click', function() {
+                isAdminLoggedIn = false;
+                localStorage.removeItem('adminLoggedIn');
+                dashboard.style.display = 'none';
+                document.getElementById('adminLoginModal').show();
+            });
+        });
+
+        async function loadPatientRecords() {
+            try {
+                const records = await Database.getAllPredictions();
+                const tableBody = document.getElementById('patientsTableBody');
+                const totalEl = document.getElementById('totalRecords');
+                const todayEl = document.getElementById('todayRecords');
+                
+                const today = new Date().toDateString();
+                let todayCount = 0;
+                
+                if (records.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center py-5 text-muted">No patient records found</td></tr>';
+                    document.getElementById('visitorsDashboard').style.display = 'none';
+                    document.getElementById('noDataMsg').style.display = 'block';
+                    return;
+                }
+                
+                tableBody.innerHTML = records.map(record => {
+                    const topPred = record.predictions[0] || {};
+                    const date = new Date(record.timestamp).toLocaleDateString();
+                    if (new Date(record.timestamp).toDateString() === today) todayCount++;
+                    
+                    return `
+                        <tr>
+                            <td><strong>${date}</strong><br><small>${new Date(record.timestamp).toLocaleTimeString()}</small></td>
+                            <td>${record.userName || record.userId || 'Anonymous'}</td>
+                            <td>${record.email || record.phone || '-'}</td>
+                            <td>
+                                <div class="badge bg-light text-dark small mb-1 d-block">${record.symptoms.join(', ')}</div>
+                            </td>
+                            <td><span class="fw-bold">${topPred.disease || 'N/A'}</span></td>
+                            <td><span class="badge bg-${topPred.confidence > 85 ? 'success' : topPred.confidence > 70 ? 'warning' : 'secondary'}">${topPred.confidence || 0}%</span></td>
+                            <td>
+                                <span class="badge bg-${topPred.risk === 'High' ? 'danger' : topPred.risk === 'Medium' ? 'warning' : 'success'} fs-6">
+                                    ${topPred.risk || 'Low'}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary viewDetails" data-record='${JSON.stringify(record)}'>
+                                    <i class="bi bi-eye"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+                
+                totalEl.textContent = records.length;
+                todayEl.textContent = todayCount;
+                
+                // Details modal
+                document.querySelectorAll('.viewDetails').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const record = JSON.parse(this.dataset.record);
+                        showPatientDetails(record);
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Load records error:', error);
+                document.getElementById('patientsTableBody').innerHTML = '<tr><td colspan="8" class="text-center py-5 text-danger">Error loading records</td></tr>';
+            }
+        }
+
+        // Add missing Database method for all predictions
+        Database.getAllPredictions = async function() {
+            return new Promise((resolve, reject) => {
+                if (!this.db) return resolve([]);
+                const transaction = this.db.transaction(['predictions'], 'readonly');
+                const store = transaction.objectStore('predictions');
+                const request = store.getAll();
+                request.onsuccess = () => {
+                    const records = request.result.map(record => ({
+                        ...record,
+                        userName: record.userName || 'N/A',
+                        email: record.email || 'N/A',
+                        phone: record.phone || 'N/A'
+                    }));
+                    resolve(records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
+                };
+                request.onerror = reject;
+            });
+        };
+
+        function showPatientDetails(record) {
+            const modal = new bootstrap.Modal(document.createElement('div'));
+            const modalHtml = `
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Patient Details - ${new Date(record.timestamp).toLocaleString()}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Patient Info</h6>
+                                    <p><strong>Name:</strong> ${record.userName || 'N/A'}</p>
+                                    <p><strong>Email:</strong> ${record.email || 'N/A'}</p>
+                                    <p><strong>Phone:</strong> ${record.phone || 'N/A'}</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6>Symptoms Reported</h6>
+                                    <div class="badge bg-light text-dark mb-2 d-inline-block">${record.symptoms.join(', ')}</div>
+                                    <h6>Predictions</h6>
+                                    ${record.predictions.map(pred => `
+                                        <div class="card mb-2">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h6>${pred.disease}</h6>
+                                                    <span class="badge bg-${pred.confidence > 85 ? 'success' : 'warning'}">${pred.confidence}%</span>
+                                                </div>
+                                                <small>${pred.risk} risk - ${pred.doctorWhen}</small>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Simplified - just alert for demo
+            alert('Patient details:\n' + JSON.stringify(record, null, 2));
+        }
+    </script>
+</body>
+</html>

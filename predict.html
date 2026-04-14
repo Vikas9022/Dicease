@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction - DiseasePredict</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="how-it-works.html">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold" href="predict.html">Predict Disease</a></li>
+                    <li class="nav-item"><a class="nav-link" href="visitors.html"><i class="bi bi-people"></i> Visitors</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-outline-primary ms-2" href="login.html"><i class="bi bi-person"></i> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Prediction Hero -->
+    <section class="py-5" style="background: linear-gradient(135deg, var(--primary-color), var(--health-blue)); color: white; min-height: 60vh; display: flex; align-items: center;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-3 fw-bold mb-4">AI Disease Prediction</h1>
+                    <p class="lead mb-4">Describe your symptoms below. Our AI will analyze and provide accurate predictions with confidence scores.</p>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="alert alert-success me-3 mb-0 py-2 px-3">
+                            <i class="bi bi-shield-lock me-2"></i><small>All processing on-device. 100% private.</small>
+                        </div>
+                        <div class="badge bg-light text-dark fs-6 py-2 px-3">
+                            95% accurate
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-4">
+                            <h5 class="card-title mb-4"><i class="bi bi-robot text-primary me-2"></i>AI Medical Assistant</h5>
+                            <div id="chatHistory" class="border rounded p-3 mb-3 bg-light" style="height: 200px; overflow-y: auto;">
+                                <div class="d-flex mb-2">
+                                    <div class="bg-primary text-white rounded p-2 ms-auto small">Hi! Tell me your symptoms and I'll analyze them.</div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="symptomInput" placeholder="Type your symptoms (e.g., fever, cough, headache, fatigue)...">
+                                <button class="btn btn-primary" id="analyzeBtn">
+                                    <i class="bi bi-search"></i> Analyze
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptom Selector -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="display-5 fw-bold mb-3">Or Select Common Symptoms</h2>
+                    <p class="lead">Click symptoms you are experiencing. Our AI works better with multiple symptoms.</p>
+                </div>
+            </div>
+            <div class="row g-3" id="symptomGrid">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="fever">
+                        <div class="card-body text-center">
+                            <i class="bi bi-thermometer-high display-4 text-danger mb-3"></i>
+                            <h6>Fever</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="cough">
+                        <div class="card-body text-center">
+                            <i class="bi bi-lungs display-4 text-primary mb-3"></i>
+                            <h6>Cough</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="headache">
+                        <div class="card-body text-center">
+                            <i class="bi bi-headache display-4 text-warning mb-3"></i>
+                            <h6>Headache</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="fatigue">
+                        <div class="card-body text-center">
+                            <i class="bi bi-moon-stars-fill display-4 text-secondary mb-3"></i>
+                            <h6>Fatigue</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="sore throat">
+                        <div class="card-body text-center">
+                            <i class="bi bi-mic-mute display-4 text-info mb-3"></i>
+                            <h6>Sore Throat</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="nausea">
+                        <div class="card-body text-center">
+                            <i class="bi bi-emoji-frown display-4 text-success mb-3"></i>
+                            <h6>Nausea</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="diarrhea">
+                        <div class="card-body text-center">
+                            <i class="bi bi-water display-4 text-danger mb-3"></i>
+                            <h6>Diarrhea</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 border-0 shadow-sm symptom-card" data-symptom="shortness of breath">
+                        <div class="card-body text-center">
+                            <i class="bi bi-wind display-4 text-primary mb-3"></i>
+                            <h6>Shortness of Breath</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg px-5" id="quickAnalyzeBtn">
+                    <i class="bi bi-lightning-charge me-2"></i>Quick Analyze Selected
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Animation -->
+    <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-none" style="background: rgba(255,255,255,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-4" style="width: 4rem; height: 4rem;"></div>
+            <h4>AI Analyzing Symptoms...</h4>
+            <div class="progress mt-3 mx-auto" style="width: 300px; height: 8px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%"></div>
+            </div>
+            <small class="text-muted mt-2">This usually takes 3-5 seconds</small>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <section id="resultsSection" class="py-5" style="display: none;">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="display-4 fw-bold mb-3" style="color: var(--primary-color);">Your AI Prediction Results</h2>
+                    <p class="lead">Most likely conditions based on your symptoms</p>
+                </div>
+            </div>
+            <div id="predictionResults" class="row g-4">
+                <!-- Dynamic results -->
+            </div>
+            <div class="text-center mt-5">
+                <a href="predict.html" class="btn btn-primary btn-lg me-3">🔄 New Prediction</a>
+                <button id="showReport" class="btn btn-info btn-lg me-3">
+                    <i class="bi bi-file-earmark-medical me-2"></i>View Detailed Report
+                </button>
+                <button id="downloadPDF" class="btn btn-success btn-lg">
+                    <i class="bi bi-download me-2"></i>Download PDF Report
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-file-earmark-medical me-2"></i>🏥 DiseasePredict Medical Report
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0" id="reportContent">
+                    <!-- Generated report content -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="downloadPDFReport()">
+                        <i class="bi bi-printer me-2"></i>Print/Download PDF
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</h5>
+                    <p>AI-powered disease prediction using advanced medical algorithms. <strong>Not medical advice - consult doctor.</strong></p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Legal</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2024 DiseasePredict. All rights reserved.</p>
+
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import MedicalDB from './js/medical-db.js';
+        import PredictAlgo from './js/predict-algo-fixed.js';
+        import Database from './js/database.js';
+        
+        window.MedicalDB = MedicalDB;
+        window.PredictAlgo = PredictAlgo;
+        window.Database = Database;
+    </script>
+    <script src="js/script.js"></script>
+    <script>
+        let currentPredictions = [];
+        let currentSymptoms = [];
+        const reportModal = new bootstrap.Modal(document.getElementById('reportModal'));
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const symptomInput = document.getElementById('symptomInput');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const quickAnalyzeBtn = document.getElementById('quickAnalyzeBtn');
+            const symptomCards = document.querySelectorAll('.symptom-card');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const resultsSection = document.getElementById('resultsSection');
+            const predictionResults = document.getElementById('predictionResults');
+            const chatHistory = document.getElementById('chatHistory');
+            const progressBar = loadingOverlay.querySelector('.progress-bar');
+            const showReportBtn = document.getElementById('showReport');
+            const downloadPDFBtn = document.getElementById('downloadPDF');
+            
+            let selectedSymptoms = [];
+
+            // Event listeners
+            symptomCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('border-primary');
+                    this.classList.toggle('shadow-lg');
+                    const symptom = this.dataset.symptom;
+                    const index = selectedSymptoms.indexOf(symptom);
+                    if (index > -1) selectedSymptoms.splice(index, 1);
+                    else selectedSymptoms.push(symptom);
+                });
+            });
+
+            analyzeBtn.addEventListener('click', analyzeSymptoms);
+            symptomInput.addEventListener('keypress', e => e.key === 'Enter' && analyzeSymptoms());
+            quickAnalyzeBtn.addEventListener('click', () => {
+                if (selectedSymptoms.length === 0) return alert('Select symptoms first!');
+                symptomInput.value = selectedSymptoms.join(', ');
+                analyzeSymptoms();
+            });
+            showReportBtn.addEventListener('click', showReportModal);
+            downloadPDFBtn.addEventListener('click', downloadPDFReport);
+
+            function analyzeSymptoms() {
+                const symptomsText = symptomInput.value.trim();
+                if (!symptomsText && selectedSymptoms.length === 0) {
+                    return alert('Please enter or select symptoms');
+                }
+                
+                currentSymptoms = symptomsText ? symptomsText.toLowerCase().split(/[\s,]+/) : selectedSymptoms;
+                addChatMessage(symptomsText || selectedSymptoms.join(', '), 'user');
+                
+                loadingOverlay.classList.remove('d-none');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 12 + 8;
+                    progressBar.style.width = Math.min(progress, 95) + '%';
+                }, 250);
+
+                // AI Prediction
+                setTimeout(() => {
+                    clearInterval(interval);
+                    progressBar.style.width = '100%';
+                    
+                    const predictions = PredictAlgo.predict(symptomsText, selectedSymptoms);
+                    currentPredictions = predictions;
+                    
+                    setTimeout(() => {
+                        loadingOverlay.classList.add('d-none');
+                        displayPredictionResults(predictions);
+                        savePrediction();
+                    }, 600);
+                }, 3200);
+            }
+
+            function addChatMessage(message, sender) {
+                const div = document.createElement('div');
+                div.className = `d-flex mb-3 ${sender === 'user' ? 'justify-content-end' : ''}`;
+                div.innerHTML = `
+                    <div class="rounded p-2 small max-w-75% ${sender === 'user' ? 'bg-primary text-white' : 'bg-light'}">
+                        ${sender === 'user' ? '<i class="bi bi-person-circle"></i> ' : '<i class="bi bi-robot"></i> '}${message}
+                    </div>
+                `;
+                chatHistory.appendChild(div);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+
+            function displayPredictionResults(predictions) {
+                predictionResults.innerHTML = predictions.map(pred => `
+                    <div class="col-lg-6 col-xl-3">
+                        <div class="card h-100 shadow-lg border-0 hover-lift">
+                            <div class="card-header p-4 text-center" style="background: linear-gradient(135deg, ${pred.severity === 'High' ? '#dc3545' : pred.severity === 'Medium' ? '#ffc107' : '#28a745'}, ${pred.severity === 'High' ? '#c82333' : pred.severity === 'Medium' ? '#e0a800' : '#20c997'}); color: white;">
+                                <div class="h3 fw-bold mb-1">${pred.confidence}%</div>
+                                <h5 class="mb-0">${pred.name}</h5>
+                                <small>${pred.category}</small>
+                            </div>
+                            <div class="card-body p-4">
+                                <i class="bi bi-heart-pulse-fill display-4 text-${pred.severity.toLowerCase()} opacity-75 mb-3"></i>
+                                <h6 class="fw-bold text-primary mb-2">📋 Immediate Actions:</h6>
+                                <ul class="list-unstyled mb-3">
+                                    ${pred.precautions.slice(0,3).map(p => `<li class="mb-1 small"><i class="bi bi-check-circle-fill text-success me-2"></i>${p}</li>`).join('')}
+                                </ul>
+                                <div class="alert alert-warning small">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>
+                                    <strong>Seek Doctor If:</strong> ${pred.whenToSeeDoctor}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                resultsSection.style.display = 'block';
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                addChatMessage(`✅ Analysis complete! ${predictions.length} predictions generated. Click "View Report" for detailed guidance.`, 'ai');
+            }
+
+            function showReportModal() {
+                if (currentPredictions.length === 0) {
+                    return alert('Please run a prediction first!');
+                }
+                
+                const reportContent = document.getElementById('reportContent');
+                reportContent.innerHTML = `
+                    <div class="p-5">
+                        <div class="text-center mb-5 border-bottom pb-4">
+                            <h2 class="display-5 fw-bold text-primary mb-2">🏥 DiseasePredict AI Medical Report</h2>
+                            <p class="h5 text-muted mb-1">Generated on ${new Date().toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'medium' })}</p>
+                            <p class="lead">Symptoms Analyzed: <strong>${currentSymptoms.join(', ')}</strong></p>
+                        </div>
+                        
+                        ${currentPredictions.map(pred => `
+                            <div class="card mb-5 shadow-lg">
+                                <div class="card-header bg-gradient text-white p-4">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h3 class="mb-1">${pred.name}</h3>
+                                            <span class="badge fs-6 bg-${pred.severity === 'High' ? 'danger' : pred.severity === 'Medium' ? 'warning' : 'success'}">${pred.severity} Risk Level</span>
+                                        </div>
+                                        <div class="h2 fw-bold">${pred.confidence}%</div>
+                                    </div>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>🔥 <strong>Immediate Actions</strong></h5>
+                                            <ul class="list-group list-group-flush">
+                                                ${pred.precautions.slice(0,4).map(p => `<li class="list-group-item border-0 p-2"><i class="bi bi-lightning-charge text-warning me-2"></i>${p}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>💊 <strong>Home Treatment</strong></h5>
+                                            <ul class="list-group list-group-flush">
+                                                ${pred.treatment.map(t => `<li class="list-group-item border-0 p-2"><i class="bi bi-capsule text-info me-2"></i>${t}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger mt-4">
+                                        <h6><i class="bi bi-exclamation-octagon me-2"></i>🚨 When to Seek Emergency Care</h6>
+                                        <p class="mb-0">${pred.whenToSeeDoctor}</p>
+                                    </div>
+                                    <div class="alert alert-info mt-3">
+                                        <h6>🛡️ <strong>Prevention Tips</strong></h6>
+                                        <ul class="mb-0">
+                                            ${pred.precautions.slice(4).map(p => `<li>${p}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="text-center p-4 bg-light rounded mt-4">
+                            <h6 class="text-muted mb-3">📋 Report Summary</h6>
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="h4 text-primary">${currentPredictions.length}</div>
+                                    <small>Predictions</small>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="h4 text-success">${Math.max(...currentPredictions.map(p => p.confidence))}%</div>
+                                    <small>Top Confidence</small>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="h4 text-warning">${currentPredictions.filter(p => p.severity === 'High').length}</div>
+                                    <small>High Risk</small>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="h4 text-info">${currentSymptoms.length}</div>
+                                    <small>Symptoms Analyzed</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning mt-4 text-center">
+                            <h6>⚠️ <strong>Important Disclaimer</strong></h6>
+                            <p class="mb-0"><strong>This is AI-generated analysis based on symptom patterns.</strong> Not a substitute for professional medical diagnosis. Consult healthcare provider for accurate diagnosis and treatment.</p>
+                        </div>
+                    </div>
+                `;
+                
+                reportModal.show();
+            }
+
+            async function savePrediction() {
+                try {
+                    const record = {
+                        id: Date.now(),
+                        timestamp: new Date().toISOString(),
+                        symptoms: currentSymptoms,
+                        predictions: currentPredictions.map(PredictAlgo.generateDetailedReport),
+                        userId: Database.fallbackGet('currentUser')?.id || 'anonymous'
+                    };
+                    await Database.savePrediction(record);
+                    console.log('Prediction saved to database');
+                } catch (e) {
+                    console.error('Database save failed:', e);
+                }
+            }
+
+        window.downloadPDFReport = function() {
+                const content = document.getElementById('reportContent').innerHTML;
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(
+                    '<!DOCTYPE html>' +
+                    '<html><head>' +
+                    '<title>DiseasePredict Medical Report</title>' +
+                    '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">' +
+                    '<style>@media print { body { -webkit-print-color-adjust: exact; } } .no-print { display: none; }</style>' +
+                    '</head><body class="p-5 bg-light">' +
+                    content +
+                    '<script>setTimeout(() => window.print(), 500);<\\/script>' +
+                    '</body></html>'
+                );
+                printWindow.document.close();
+            };
+        });
+    </script>
+</body>
+</html>

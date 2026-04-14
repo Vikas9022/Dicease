@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - DiseasePredict</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .signup-hero {
+            background: linear-gradient(135deg, var(--secondary-color), #20c997);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .form-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .password-toggle {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="how-it-works.html">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="predict.html">Predict Now</a></li>
+                    <li class="nav-item">
+                        <span class="nav-link active fw-bold text-primary">
+                            <i class="bi bi-person-circle me-1"></i>Sign Up
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Hero -->
+    <section class="signup-hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-xl-5 col-xxl-4">
+                    <div class="form-card p-4 p-lg-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <div class="h2 mb-1">
+                                <i class="bi bi-person-plus text-success"></i>
+                            </div>
+                            <h2 class="fw-bold mb-1">Create New Account</h2>
+                            <p class="text-muted mb-0">Complete registration to save your predictions</p>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <form id="signupForm">
+                            <!-- Name -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com" required>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <!-- Contact with Country Codes -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <select class="form-select" id="countryCode" style="max-width: 140px;">
+                                        <option value="+91">🇮🇳 India (+91)</option>
+                                        <option value="+1">🇺🇸 USA (+1)</option>
+                                        <option value="+82">🇰🇷 Korea (+82)</option>
+                                        <option value="+44">🇬🇧 UK (+44)</option>
+                                        <option value="+49">🇩🇪 Germany (+49)</option>
+                                        <option value="+33">🇫🇷 France (+33)</option>
+                                        <option value="+81">🇯🇵 Japan (+81)</option>
+                                        <option value="+86">🇨🇳 China (+86)</option>
+                                        <option value="+61">🇦🇺 Australia (+61)</option>
+                                        <option value="+971">🇦🇪 UAE (+971)</option>
+                                        <option value="+234">🇳🇬 Nigeria (+234)</option>
+                                        <option value="+880">🇧🇩 Bangladesh (+880)</option>
+                                    </select>
+                                    <input type="tel" class="form-control flex-grow-1" id="contactNum" name="contact" placeholder="Enter mobile number" required>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                                <small class="form-text text-muted">Enter your mobile number without country code</small>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Create strong password (8+ chars)" required>
+                                    <i class="bi bi-eye-slash password-toggle" onclick="togglePassword('password')"></i>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                                <small class="form-text text-muted">Must contain uppercase, lowercase, number (min 8 chars)</small>
+                            </div>
+
+                            <!-- Terms Checkbox -->
+                            <div class="mb-4 form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to <a href="terms-of-service.html" class="text-decoration-none fw-semibold">Terms of Service</a> & \n                                    <a href="privacy-policy.html" class="text-decoration-none fw-semibold">Privacy Policy</a>
+                                </label>
+                                <div class="invalid-feedback d-block"></div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-success btn-lg w-100 mb-3 fw-semibold shadow-lg" id="submitBtn">
+                                <span class="spinner-border spinner-border-sm d-none me-2" id="submitSpinner"></span>
+                                Complete Sign Up
+                            </button>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="flex-grow-1 border-bottom"></div>
+                            <span class="px-3 text-muted small">or</span>
+                            <div class="flex-grow-1 border-bottom"></div>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="mb-0">
+                                Already registered? 
+                                <a href="login.html" class="btn btn-outline-primary btn-lg w-100 fw-semibold">Sign In to Account</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="h2 fw-bold mb-3">Why Create an Account?</h3>
+                    <p class="lead text-muted">Unlock premium features with your free account</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card h-100 text-center p-4">
+                        <i class="bi bi-bookmark-heart display-4 text-primary mb-3"></i>
+                        <h5>Save Predictions</h5>
+                        <p>Keep track of all your health predictions history</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100 text-center p-4">
+                        <i class="bi bi-graph-up display-4 text-success mb-3"></i>
+                        <h5>Trend Analysis</h5>
+                        <p>Monitor symptoms patterns over time</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100 text-center p-4">
+                        <i class="bi bi-share-fill display-4 text-info mb-3"></i>
+                        <h5>Doctor Sharing</h5>
+                        <p>Securely share results with healthcare providers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</h5>
+                    <p>AI-powered disease prediction. Your data privacy is our priority.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="predict.html">Predict</a></li>
+                        <li><a href="login.html">Sign In</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Secure</h6>
+                    <div class="mb-2">
+                        <span class="badge bg-success me-2"><i class="bi bi-lock-fill"></i> AES-256</span>
+                        <span class="badge bg-info"><i class="bi bi-check-circle"></i> GDPR</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2024 DiseasePredict. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Password toggle
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling;
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+
+        // Signup form validation & submit
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.getElementById('signupForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitSpinner = document.getElementById('submitSpinner');
+
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading
+                submitSpinner.classList.remove('d-none');
+                submitBtn.disabled = true;
+
+                // Get values
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const countryCode = document.getElementById('countryCode').value;
+                const contactNum = document.getElementById('contactNum').value.trim().replace(/[\s\-\(\)]/g, '');
+                const contact = countryCode + ' ' + contactNum;
+                const password = document.getElementById('password').value;
+                const terms = document.getElementById('terms').checked;
+
+                // Reset feedback
+                document.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
+                document.querySelector('#terms ~ .invalid-feedback').textContent = '';
+
+                let isValid = true;
+
+                // Name
+                if (name.length < 2) {
+                    document.querySelector('#name ~ .invalid-feedback').textContent = 'Name must be at least 2 characters';
+                    isValid = false;
+                }
+
+                // Email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    document.querySelector('#email ~ .invalid-feedback').textContent = 'Please enter valid email';
+                    isValid = false;
+                }
+
+                // Contact number (7-15 digits)
+                const phoneRegex = /^[0-9]{7,15}$/;
+                if (!phoneRegex.test(contactNum)) {
+                    document.querySelector('#contactNum ~ .invalid-feedback').textContent = 'Phone number must be 7-15 digits';
+                    isValid = false;
+                }
+
+                // Password
+                const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+                if (!passRegex.test(password)) {
+                    document.querySelector('#password ~ .invalid-feedback').textContent = 'Password: 8+ chars, 1 uppercase, 1 number';
+                    isValid = false;
+                }
+
+                // Terms
+                if (!terms) {
+                    document.querySelector('#terms ~ .invalid-feedback').textContent = 'You must agree to terms';
+                    document.querySelector('#terms ~ .invalid-feedback').classList.add('d-block');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Simulate API
+                    setTimeout(() => {
+                        submitSpinner.classList.add('d-none');
+                        submitBtn.disabled = false;
+                        
+                        alert(`✅ Welcome ${name}!\n\nAccount created successfully.\n\nPhone: ${contact}\n\nRedirecting to predictions...`);
+                        window.location.href = 'predict.html';
+                    }, 1500);
+                } else {
+                    submitSpinner.classList.add('d-none');
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

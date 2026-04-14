@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - DiseasePredict</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .login-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--health-blue));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .form-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .form-floating > .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .password-toggle {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="how-it-works.html">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="predict.html">Predict Now</a></li>
+                    <li class="nav-item">
+                        <span class="nav-link active fw-bold text-primary">
+                            <i class="bi bi-person-circle me-1"></i>Account
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Hero -->
+    <section class="login-hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-xl-5 col-xxl-4">
+                    <div class="form-card p-4 p-lg-5">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <div class="h2 mb-1">
+                                <i class="bi bi-person-heart text-primary"></i>
+                            </div>
+                            <h2 class="fw-bold mb-1">Create Account</h2>
+                            <p class="text-muted mb-0">Join DiseasePredict to save your prediction history</p>
+                        </div>
+
+                        <!-- Simple Login Form -->
+                        <form id="loginForm">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold mb-1">Welcome Back</h2>
+                                <p class="text-muted mb-0">Sign in to your account</p>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Password</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                    <i class="bi bi-eye-slash password-toggle" onclick="togglePassword('loginPassword')"></i>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                                Sign In
+                            </button>
+
+                            <!-- Create Account Link -->
+                            <div class="text-center">
+                                <p class="mb-0">
+                                    New to DiseasePredict? 
+                                    <a href="signup.html" class="fw-semibold text-primary">Create Account</a>
+                                </p>
+                            </div>
+                        </form>
+
+                            <!-- Divider -->
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="flex-grow-1 border-bottom"></div>
+                                <span class="px-3 text-muted small">or</span>
+                                <div class="flex-grow-1 border-bottom"></div>
+                            </div>
+
+                            <!-- Login Toggle -->
+                            <div class="text-center">
+                                <p class="mb-0">
+                                    Already have an account? 
+                                    <a href="#" class="fw-semibold text-primary" id="showLogin">Sign In</a>
+                                </p>
+                            </div>
+                        </form>
+
+                        <!-- Login Form (Hidden) -->
+                        <form id="loginForm" style="display: none;">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold mb-1">Welcome Back</h2>
+                                <p class="text-muted mb-0">Sign in to access your predictions</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="loginEmail" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Password</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                    <i class="bi bi-eye-slash password-toggle" onclick="togglePassword('loginPassword')"></i>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-primary btn-lg w-100 mb-3 fw-semibold">
+                                Sign In
+                            </button>
+
+                            <div class="text-center">
+                                <p class="mb-0">
+                                    Don't have an account? 
+                                    <a href="#" class="fw-semibold text-primary" id="showRegister">Create Account</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="row mt-4 text-center">
+                        <div class="col-4">
+                            <div class="badge bg-success rounded-pill px-3 py-2">
+                                <i class="bi bi-shield-check me-1"></i>Secure
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="badge bg-info rounded-pill px-3 py-2">
+                                <i class="bi bi-lock-fill me-1"></i>Encrypted
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="badge bg-primary rounded-pill px-3 py-2">
+                                <i class="bi bi-check-circle me-1"></i>GDPR
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="bi bi-heart-pulse-fill me-2"></i>DiseasePredict</h5>
+                    <p>AI-powered disease prediction using your symptoms. Not a substitute for professional medical advice.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="predict.html">Predict Now</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Legal</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2024 DiseasePredict. All rights reserved.</p>
+
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Password toggle function
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling;
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+
+        // Form handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+            const showLogin = document.getElementById('showLogin');
+            const showRegister = document.getElementById('showRegister');
+
+            // Toggle forms
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            });
+
+            showRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            });
+
+            // Registration form validation and submit
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading
+                const submitBtn = document.getElementById('submitBtn');
+                const spinner = document.getElementById('submitSpinner');
+                spinner.classList.remove('d-none');
+                submitBtn.disabled = true;
+
+                // Validation
+                let isValid = true;
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const countryCode = document.getElementById('countryCode').value;
+                const contactNum = document.getElementById('contactNum').value.trim();
+                const contact = countryCode + ' ' + contactNum;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // Clear previous errors
+                document.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
+
+                // Name validation
+                if (name.length < 2) {
+                    document.querySelector('#name ~ .invalid-feedback').textContent = 'Name must be at least 2 characters';
+                    isValid = false;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    document.querySelector('#email ~ .invalid-feedback').textContent = 'Please enter a valid email';
+                    isValid = false;
+                }
+
+                // Contact validation (simple phone check)
+                const phoneRegex = /^[0-9]{7,15}$/;
+                if (!phoneRegex.test(contactNum.replace(/[\s\-\(\)]/g, ''))) {
+                    document.querySelector('#contactNum ~ .invalid-feedback').textContent = 'Phone number must be 7-15 digits';
+                    isValid = false;
+                }
+
+                // Password validation
+                const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+                if (!passRegex.test(password)) {
+                    document.querySelector('#password ~ .invalid-feedback').textContent = 'Password must be 8+ chars with uppercase & number';
+                    isValid = false;
+                }
+
+                // Confirm password
+                if (password !== confirmPassword) {
+                    document.querySelector('#confirmPassword ~ .invalid-feedback').textContent = 'Passwords do not match';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Simulate API call
+                    setTimeout(() => {
+                        spinner.classList.add('d-none');
+                        submitBtn.disabled = false;
+                        
+                        // Demo success
+                        alert(`✅ Account created successfully for ${name}!\n\nWelcome to DiseasePredict!\n\nRedirecting to predictions...`);
+                        
+                        // Redirect to predict page (demo)
+                        window.location.href = 'predict.html';
+                    }, 2000);
+                } else {
+                    spinner.classList.add('d-none');
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Login form submit
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('✅ Login successful!\n\nRedirecting to dashboard...');
+                window.location.href = 'predict.html';
+            });
+        });
+    </script>
+</body>
+</html>
